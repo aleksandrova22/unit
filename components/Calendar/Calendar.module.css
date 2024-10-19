@@ -1,0 +1,7 @@
+table.calendar {
+  /* background-color: aqua; */
+  border-collapse: collapse;
+  & td {
+    border: 1px solid gray;
+  }
+}
