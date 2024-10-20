@@ -1,0 +1,5 @@
+.popup{
+  position: absolute;
+  box-shadow: 0 0 20px 3px gray;
+  background-color: white;
+}

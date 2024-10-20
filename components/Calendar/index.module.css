@@ -1,0 +1,30 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+
+  & fieldset {
+    border-radius: 10px;
+  }
+}
+
+.dateselector{
+  border: 1px solid gray;
+  text-align: right;
+  &::after {
+    content: '📆';
+  }
+}
+
+.pinkcalendar {
+  background-color: pink;
+  border-collapse: collapse;
+  & td {
+    border: 1px solid lavenderblush;
+    text-align: center;
+    cursor: pointer;
+  }
+  & .selected{
+    background-color: blue;
+    border-radius: 50%;
+  }
+}

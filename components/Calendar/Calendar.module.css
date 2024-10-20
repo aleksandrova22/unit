@@ -2,6 +2,12 @@ table.calendar {
   /* background-color: aqua; */
   border-collapse: collapse;
   & td {
-    border: 1px solid gray;
+    border: 1px solid lavenderblush;
+    text-align: center;
+    cursor: pointer;
+  }
+  & .selected{
+    background-color: lime;
+    border-radius: 50%;
   }
 }
