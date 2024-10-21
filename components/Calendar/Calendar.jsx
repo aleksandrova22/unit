@@ -15,7 +15,7 @@ export function Calendar({ date, classes = defaultclasses }) {
     shift = (-1 + firstDayOfWeek + 7) % 7;                  //      ПН=0 ВТ=1 .. СБ=5 ВС=6
   return <>
     <table className={classes.calendar}>
-      <caption>{caption}</caption>
+      <caption title='Выбор года и месяца'>{caption}</caption>
       <thead>
         <tr>{dayNames}</tr>
       </thead>
