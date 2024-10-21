@@ -10,4 +10,7 @@ table.calendar {
     background-color: lime;
     border-radius: 50%;
   }
+  & caption {
+    cursor: pointer;
+  }
 }
