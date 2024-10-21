@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useState, useMemo } from 'react';
 import { Calendar } from './Calendar';
 import { LocaleContext } from './LocaleContext';
 import classes from './index.module.css';
@@ -25,18 +25,19 @@ export function CalendarDemo() {
       </section>
     </LocaleContext.Provider>
 
-  </>;
+  </>
 }
 
-function SelectYear({date, setYear}) {
-  return <input  type="number" min={1} max={10000} defaultValue={date.getFullYear()} onChange={setYear}/>
+function SelectedYear({ date, setYear }) {
+  return <input type="number" min={1} max={10000} defaultValue={date.getFullYear()} onChange={setYear} />
 }
 
-function SelectMonth({date, setMonth}) {
+function SelectedMonth({ date, setMonth }) {
   const
-    locale = useContext(LocaleContext);
-  return <select defaultValue={date.toLocaleDateString(locale,{month:'long'})} onChange={setMonth}>
-    {Array.from({length:12},(_,index)=> <option key={index}>{(new Date(2024,index,1)).toLocaleDateString(locale,{month:'long'})}</option>)}
+    locale = useContext(LocaleContext),
+    monthNames = useMemo(()=> Array.from({ length: 12 }, (_, index) => <option key={index}>{(new Date(2024, index, 1)).toLocaleDateString(locale, { month: 'long' })}</option>),[locale]);
+  return <select defaultValue={date.toLocaleDateString(locale, { month: 'long' })} onChange={setMonth}>
+    {monthNames}
   </select>
 }
 
@@ -44,22 +45,22 @@ function SelectDay({ date, setDate }) {
   const
     setYear = event => {
       date.setFullYear(event.target.value);
-      setDate(new Date(date.getFullYear(), date.getMonth()));
+      setDate(new Date(date));
     },
     setMonth = event => {
       date.setMonth(event.target.selectedIndex)
-      setDate(new Date(date.getFullYear(), date.getMonth()));
+      setDate(new Date(date));
     },
     onClick = event => {
-      const 
+      const
         day = +event.target.closest('td[data-day]')?.dataset?.day;
       if (day)
         setDate(new Date(date.getFullYear(), date.getMonth(), day))
     };
 
   return <div onClick={onClick}>
-    <SelectYear date={date} setYear={setYear}/>
-    <SelectMonth date={date} setMonth={setMonth}/>
+    <SelectedYear date={date} setYear={setYear} />
+    <SelectedMonth date={date} setMonth={setMonth} />
     <Calendar date={date} />
   </div>;
 }
@@ -79,14 +80,14 @@ function Test1() {
   return <fieldset>
     <input type="month" value={DateToYYYYMM(date)} onChange={event => setDate(YYYYMMToDate(event.target.value))} />
     {/* {date.toString()} */}
-    <Calendar date={date} classes={{selected:''}}/>
+    <Calendar date={date} classes={{ selected: '' }} />
   </fieldset>;
 }
 
 function Test2() {
   return <fieldset>
     <LocaleContext.Provider value={"zh"}>
-      <Calendar date={new Date} classes={{calendar:classes.pinkcalendar,selected:classes.selected}}/>
+      <Calendar date={new Date} classes={{ calendar: classes.pinkcalendar, selected: classes.selected }} />
     </LocaleContext.Provider>
   </fieldset>;
 }
@@ -111,8 +112,8 @@ function Test3() {
   return <fieldset>
     <legend>test SelectDay</legend>
     date: {date.toLocaleDateString(locale)}
-    <hr/>
-   <SelectDay date={date} setDate={setDate} />
+    <hr />
+    <SelectDay date={date} setDate={setDate} />
   </fieldset >;
 }
 
@@ -122,10 +123,10 @@ function Test4() {
     [date, setDate] = useState(new Date),
     [open, setOpen] = useState(false),
     onClick1 = () => setOpen(true),
-    onClick2 = (event) =>  {
+    onClick2 = (event) => {
       const
         td = event.target.closest('td');
-      if(td)
+      if (td)
         setOpen(false);
     }
   return <fieldset onClick={onClick2}>
