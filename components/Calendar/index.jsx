@@ -29,15 +29,20 @@ export function CalendarDemo() {
 }
 
 function SelectDay({ date, setDate }) {
-  return <div onClick={
-    event => {
-      const day = +event.target.closest('td[data-day]')?.dataset?.day;
-      if (day)
-        setDate(new Date(date.getFullYear(), date.getMonth(), day))
-    }
-  }>
-    <Calendar date={date} />
-  </div>;
+    [date, setDate] = useState(new Date);
+    return <div onClick={
+        event => {
+            const
+                year = date.getFullYear(),
+                day = +event.target.closest('td[data-day]')?.dataset?.day;
+            if (day)
+                setDate(new Date(year, date.getMonth(), day))
+        }}>
+        <input type="month" value={DateToYYYYMM(date)} onChange={event => setDate(YYYYMMToDate(event.target.value))} />
+        <Calendar date={date} />
+        <hr />
+        <button onClick={() => setDate(new Date)}>Today</button>
+    </div>
 }
 
 function DateToYYYYMM(date) {
